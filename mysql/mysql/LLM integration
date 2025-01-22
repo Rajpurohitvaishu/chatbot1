@@ -1,0 +1,26 @@
+# Function to summarize product information
+def summarize_product_info(product: dict):
+    openai.api_key = "your_openai_api_key"
+    prompt = f"Summarize the following product details:\n\nName: {product['name']}\nBrand: {product['brand']}\nPrice: {product['price']}\nDescription: {product['description']}"
+    
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=100
+    )
+    
+    return response.choices[0].text.strip()
+
+# Enhance response with LLM summary
+@app.get("/query_product_summarized/")
+async def query_product_summarized(query: str):
+    db = SessionLocal()
+    product_node = ProductQueryNode(session=db)
+    graph.add_node(product_node)
+
+    products = graph.run(query)
+    summarized_products = [summarize_product_info(product) for product in products]
+
+    db.close()
+    
+    return {"result": summarized_products}
