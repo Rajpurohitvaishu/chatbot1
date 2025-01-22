@@ -1,0 +1,20 @@
+-- Suppliers Table
+CREATE TABLE Suppliers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    contact_info TEXT,
+    product_categories TEXT
+);
+
+-- Products Table
+CREATE TABLE Products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    brand VARCHAR(255),
+    price DECIMAL(10, 2),
+    category VARCHAR(255),
+    description TEXT,
+    supplier_id INT,
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(id)
+);
+
