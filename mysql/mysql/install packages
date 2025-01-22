@@ -1,0 +1,1 @@
+pip install fastapi uvicorn langgraph sqlalchemy psycopg2 openai
